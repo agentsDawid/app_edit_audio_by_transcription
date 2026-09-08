@@ -1,1 +1,1 @@
-@@  to jest projekt edit duio by transcriptiontest
+@@  to jest projekt edit duio by transcription
