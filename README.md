@@ -2,6 +2,8 @@
 
 Aplikacja Streamlit do edycji plików audio poprzez zaznaczanie niechcianych fragmentów w transkrypcji.
 
+![Python](https://img.shields.io/badge/Python-Project-blue?logo=python) ![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit) ![OpenAI](https://img.shields.io/badge/OpenAI-API-green?logo=openai) ![Whisper](https://img.shields.io/badge/Whisper-Transcription-green) ![Pydub](https://img.shields.io/badge/Pydub-Audio-blue) ![FFmpeg](https://img.shields.io/badge/FFmpeg-Media-green)
+
 ## 📋 Opis działania
 
 1. **Załaduj lub nagraj audio** - możesz załadować plik audio lub nagrać własny
