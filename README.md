@@ -87,15 +87,11 @@ Create a `.env` file in the project directory:
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-**Security:** Never commit `.env` or API credentials to GitHub. Add `.env` to `.gitignore`.
-
 ### Run
 
 ```bash
 streamlit run audio_editor.py
 ```
-
-The application should be available at **http://localhost:8501**.
 
 ## Use cases
 
@@ -112,12 +108,5 @@ The application should be available at **http://localhost:8501**.
 - Transcription requires internet access and uses the OpenAI API; recordings are sent to OpenAI for processing.
 - Avoid uploading confidential recordings without appropriate authorization.
 
-## License
-
-Developed for educational purposes. No open-source license is currently specified.
-
-## Author
-
-Developed by [agentsDawid](https://github.com/agentsDawid).
 
 **Repository:** [app_edit_audio_by_transcription](https://github.com/agentsDawid/app_edit_audio_by_transcription)
