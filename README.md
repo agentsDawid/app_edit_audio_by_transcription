@@ -114,7 +114,7 @@ The application should be available at **http://localhost:8501**.
 
 ## License
 
-Developed for educational and portfolio purposes. No open-source license is currently specified.
+Developed for educational purposes. No open-source license is currently specified.
 
 ## Author
 
