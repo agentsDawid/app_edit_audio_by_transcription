@@ -1,138 +1,123 @@
-# 🎙️ Edytuj Audio za pomocą Transkrypcji
+# 🎙️ Audio Editor by Transcription
 
-Aplikacja Streamlit do edycji plików audio poprzez zaznaczanie niechcianych fragmentów w transkrypcji.
+**Edit audio by editing its transcript.**
+
+A Streamlit application for removing unwanted passages from recordings by marking words or phrases in an AI-generated transcript — without manually editing an audio timeline.
 
 ![Python](https://img.shields.io/badge/Python-Project-blue?logo=python) ![Streamlit](https://img.shields.io/badge/Streamlit-App-red?logo=streamlit) ![OpenAI](https://img.shields.io/badge/OpenAI-API-green?logo=openai) ![Whisper](https://img.shields.io/badge/Whisper-Transcription-green) ![Pydub](https://img.shields.io/badge/Pydub-Audio-blue) ![FFmpeg](https://img.shields.io/badge/FFmpeg-Media-green)
 
-## 📋 Opis działania
+## Overview
 
-1. **Załaduj lub nagraj audio** - możesz załadować plik audio lub nagrać własny
-2. **Odtwórz audio** - sprawdź nagranie przed transkrypcją
-3. **Transkrybuj** - kliknij przycisk "Transkrybuj" aby utworzyć transkrypcję tekstu
-4. **Zaznacz fragmenty** - zaznacz niechciane słowa/frazy używając `[[ ... ]]`
-5. **Wytnij** - kliknij przycisk "Wytnij" aby otrzymać plik audio bez zaznaczonych fragmentów
+**Audio Editor by Transcription** combines speech-to-text transcription with automated audio processing. Users mark unwanted phrases in the transcript, and the application removes the corresponding audio sections using transcription timestamps.
 
-## 🔧 Instalacja
+### Key features
 
-### Krok 1: Przygotowanie środowiska
+- **Upload or record audio** directly in the browser.
+- **Transcribe speech** with OpenAI Whisper.
+- **Edit by text** using `[[double brackets]]` around unwanted words or phrases.
+- **Automatically trim audio** based on transcription timestamps.
+- **Preview and download** the resulting recording.
 
-Otwórz terminal i wykonaj następujące polecenia:
+## How it works
+
+1. Upload an audio file or record a new one.
+2. Preview the original recording.
+3. Generate a transcript with OpenAI Whisper.
+4. Mark unwanted words or phrases with `[[...]]`.
+5. Process, listen to, and download the edited audio.
+
+### Editing example
+
+**Original transcript**
+
+```text
+Welcome to today's meeting. Hmm, today we will, um, discuss the project.
+```
+
+**Marked transcript**
+
+```text
+Welcome to today's meeting. [[Hmm,]] today we will, [[um,]] discuss the project.
+```
+
+**Expected text after editing**
+
+```text
+Welcome to today's meeting. Today we will discuss the project.
+```
+
+The audio segments are removed using transcription timestamps. Cutting accuracy depends on speech recognition and word alignment.
+
+## Technology stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Application logic |
+| Streamlit | Interactive web interface |
+| OpenAI Whisper (`whisper-1`) | Speech transcription |
+| Pydub | Audio manipulation |
+| FFmpeg | Audio decoding and conversion |
+| streamlit-audiorecorder | In-browser recording |
+| python-dotenv | Environment variable management |
+
+## Getting started
+
+### Requirements
+
+- Conda and Python 3.11
+- OpenAI API key
+- FFmpeg
+
+### Installation
 
 ```bash
-# Aktywuj środowisko conda
-conda activate od_zera_do_ai
-
-# Dodaj kanał conda-forge
-conda config --append channels conda-forge
-
-# Zainstaluj wymagane pakiety
-conda install -y streamlit ffmpeg pydub openai==1.47.0 python-dotenv
-
-# Zainstaluj streamlit-audiorecorder przez pip
-pip install streamlit-audiorecorder
+git clone https://github.com/agentsDawid/app_edit_audio_by_transcription.git
+cd app_edit_audio_by_transcription
+conda create -n audio-editor python=3.11 -y
+conda activate audio-editor
+conda install -c conda-forge ffmpeg -y
+python -m pip install streamlit "openai==1.47.0" pydub python-dotenv streamlit-audiorecorder
 ```
 
-### Krok 2: Konfiguracja klucza OpenAI API
+### API configuration
 
-1. Utwórz konto na https://platform.openai.com/
-2. Wygeneruj klucz API w sekcji API Keys
-3. Otwórz plik `.env` i wpisz swój klucz:
+Create a `.env` file in the project directory:
 
-```
-OPENAI_API_KEY=sk-twoj-klucz-api-tutaj
+```dotenv
+OPENAI_API_KEY=your_openai_api_key
 ```
 
-**WAŻNE:** Nie udostępniaj nigdy swojego klucza API!
+**Security:** Never commit `.env` or API credentials to GitHub. Add `.env` to `.gitignore`.
 
-## 🚀 Uruchomienie
-
-W terminalu, w katalogu z plikiem `audio_editor.py`, wykonaj:
+### Run
 
 ```bash
 streamlit run audio_editor.py
 ```
 
-Aplikacja otworzy się automatycznie w przeglądarce pod adresem `http://localhost:8501`
+The application should be available at **http://localhost:8501**.
 
-## 📖 Instrukcja użytkowania
+## Use cases
 
-### Ładowanie audio
-- **Opcja 1:** Kliknij "Browse files" i wybierz plik audio (MP3, WAV, OGG, M4A, FLAC)
-- **Opcja 2:** Kliknij "🎤 Rozpocznij nagrywanie" aby nagrać własne audio
+- **Podcasts:** remove filler words and false starts.
+- **Interviews:** cut unwanted spoken passages.
+- **Presentations:** remove mistakes without rerecording everything.
+- **Educational content:** clean up lectures and explanations.
 
-### Transkrypcja
-1. Po załadowaniu audio, kliknij przycisk **"🎯 Transkrybuj Audio"**
-2. Poczekaj na zakończenie transkrypcji (może to potrwać kilka sekund)
-3. Transkrypcja pojawi się w polu tekstowym
+## Limitations and privacy
 
-### Edycja transkrypcji
-1. W polu tekstowym znajdź fragmenty, które chcesz usunąć z audio
-2. Zaznacz je używając podwójnych nawiasów kwadratowych: `[[fragment do usunięcia]]`
+- Results depend on transcription accuracy and timestamp alignment.
+- Overlapping voices, background noise, and short pauses can reduce cutting precision.
+- Review the output for unnatural transitions before publishing.
+- Transcription requires internet access and uses the OpenAI API; recordings are sent to OpenAI for processing.
+- Avoid uploading confidential recordings without appropriate authorization.
 
-**Przykład:**
-```
-Witam wszystkich na dzisiejszym spotkaniu. [[Hmm,]] dzisiaj [[eee]] będziemy rozmawiać o projekcie.
-```
+## License
 
-### Generowanie edytowanego audio
-1. Kliknij przycisk **"✂️ Wytnij Zaznaczone Fragmenty"**
-2. Poczekaj na przetworzenie audio
-3. Posłuchaj wyniku i pobierz plik przyciskiem **"⬇️ Pobierz Edytowane Audio"**
+Developed for educational and portfolio purposes. No open-source license is currently specified.
 
-## 📦 Zależności
+## Author
 
-- `streamlit` - interfejs użytkownika
-- `streamlit-audiorecorder` - nagrywanie audio
-- `openai` (v1.47.0) - API do transkrypcji (Whisper-1)
-- `pydub` - obróbka plików audio
-- `python-dotenv` - zarządzanie zmiennymi środowiskowymi
-- `ffmpeg` - wymagane przez pydub do konwersji audio
+Developed by [agentsDawid](https://github.com/agentsDawid).
 
-## 🔍 Rozwiązywanie problemów
-
-### Błąd: "ffmpeg not found"
-Upewnij się, że zainstalowałeś ffmpeg przez conda:
-```bash
-conda install -y ffmpeg
-```
-
-### Błąd: "Invalid API key"
-1. Sprawdź czy plik `.env` zawiera prawidłowy klucz API
-2. Upewnij się, że klucz zaczyna się od `sk-`
-3. Sprawdź czy masz środki na koncie OpenAI
-
-### Aplikacja nie znajduje fragmentów do usunięcia
-1. Sprawdź czy używasz podwójnych nawiasów kwadratowych: `[[tekst]]`
-2. Upewnij się, że zaznaczony tekst dokładnie odpowiada transkrypcji
-3. Model Whisper może nieznacznie różnić się w transkrypcji (np. interpunkcja)
-
-## 💡 Wskazówki
-
-- Im lepsza jakość audio, tym lepsza transkrypcja
-- Możesz zaznaczać wiele fragmentów w jednym przebiegu
-- Zachowaj oryginalne audio przed edycją
-- Testuj na krótkich nagraniach przed długimi plikami
-
-## 🎯 Przykłady użycia
-
-1. **Usuwanie parazytu językowych:** Usuń "eee", "hmm", "no więc" z nagrań
-2. **Czyszczenie podcastów:** Wytnij nieudane fragmenty lub kaszlnięcia
-3. **Edycja prezentacji:** Usuń pomyłki z nagranych prezentacji
-4. **Obróbka wywiadów:** Usuń poufne informacje z nagrań
-
-## 📄 Licencja
-
-Ten projekt jest dostępny dla celów edukacyjnych.
-
-## 🤝 Wsparcie
-
-Jeśli masz problemy:
-1. Sprawdź sekcję "Rozwiązywanie problemów"
-2. Upewnij się, że wszystkie zależności są zainstalowane
-3. Sprawdź logi w terminalu
-
----
-
-**Autor:** Aplikacja AI
-**Wersja:** 1.0
-**Data:** 2026
+**Repository:** [app_edit_audio_by_transcription](https://github.com/agentsDawid/app_edit_audio_by_transcription)
